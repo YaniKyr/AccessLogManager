@@ -72,25 +72,19 @@ if [ -z $1 -a -z $2  ] ; then
     echo "Yannis Kyriakopoulos"
 elif [ -n $1 -a -z $2 ] ; then 
     cat $1
-elif [ -n $1 -a -n $2 ] ; then
-    punctuation=`echo $2 | sed -n "s/\(-*\)\([a-z]*\)/\1/p"`
-    if [ $punctuation = '-' ] ; then 
-        cmd_type=`echo $2 | sed -n "s/\(-*\)\([a-z]*\)/\2/p"`
-        if [ $cmd_type = "method" ]; then
-            findByMethod $3
-        
-        else 
-        echo "Fallacy"
-        fi 
-    elif [ $punctuation = '--' ] ; then 
-        cmd_type=`echo $2 | sed -n "s/\(-*\)\([a-z]*\)/\2/p"`
-        if [ $cmd_type = "usrid" ]; then
-            mining_usernames $3
-        fi
-    else 
-        echo "Fallacy"
-    fi
-    
-    #mining_usernames
+elif [ $1 = "--help" -o $1 = "-h" -a -z $2 ]; then
+    echo "Manual Instructions"
 
+elif [ -n $1 -a -n $2 ] ; then
+    
+    case $2 in 
+        -method)
+            findByMethod $3
+        ;;
+        --usrid)
+            mining_usernames $3
+        ;;
+        *)
+        echo "DEFAULT"
+    esac
 fi 
