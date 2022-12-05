@@ -42,8 +42,15 @@ function mining_usernames(){
         let userArr["-"]=number_of_lines-number +1
         for key in "${!userArr[@]}"; do echo "${userArr[$key]} $key"; done
     else
-        sed -n "s/.*\($1\).*/\0/p" $FILE > temp_cache.log
+        if [ $1 = "-" ]; then 
+            sed -n "s/.*\(- -\).*/\0/p" $FILE 
 
+        elif [[ "$1" =~ [^a-zA-Z0-9] ]]; then
+            echo "Fallacy"
+        else
+            
+            sed -n "s/.*\($1\).*/\0/p" $FILE
+        fi
         
     fi
 }
