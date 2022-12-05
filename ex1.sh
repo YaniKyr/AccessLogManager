@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#USE CASE instead of if's 
 FILE=$1
 CMD=$2
 STRS=$3
@@ -55,22 +56,39 @@ function mining_usernames(){
     fi
 }
 
+function findByMethod(){
+    if [ -z $1 ]; then 
+    echo "Fallacy"
+    elif [ $1 = "GET" ]; then
+        sed -n "s/.*GET.*/\0/p" $FILE
+    elif [ $1 = "POST" ]; then 
+        sed -n "s/.*POST.*/\0/p" $FILE
+    else 
+        echo "Fallacy"
+    fi
+}
 
 if [ -z $1 -a -z $2  ] ; then
     echo "Yannis Kyriakopoulos"
 elif [ -n $1 -a -z $2 ] ; then 
     cat $1
 elif [ -n $1 -a -n $2 ] ; then
-    punctation=`echo $2 | sed -n "s/\(-*\)\([a-z]*\)/\1/p"`
+    punctuation=`echo $2 | sed -n "s/\(-*\)\([a-z]*\)/\1/p"`
     if [ $punctuation = '-' ] ; then 
-        echo "correct way"
+        cmd_type=`echo $2 | sed -n "s/\(-*\)\([a-z]*\)/\2/p"`
+        if [ $cmd_type = "method" ]; then
+            findByMethod $3
+        
+        else 
+        echo "Fallacy"
+        fi 
     elif [ $punctuation = '--' ] ; then 
         cmd_type=`echo $2 | sed -n "s/\(-*\)\([a-z]*\)/\2/p"`
         if [ $cmd_type = "usrid" ]; then
             mining_usernames $3
         fi
     else 
-        echo "fallasy"
+        echo "Fallacy"
     fi
     
     #mining_usernames
