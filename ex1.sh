@@ -62,9 +62,9 @@ elif [ -n $1 -a -z $2 ] ; then
     cat $1
 elif [ -n $1 -a -n $2 ] ; then
     punctation=`echo $2 | sed -n "s/\(-*\)\([a-z]*\)/\1/p"`
-    if [ $punctation = '-' ] ; then 
+    if [ $punctuation = '-' ] ; then 
         echo "correct way"
-    elif [ $punctation = '--' ] ; then 
+    elif [ $punctuation = '--' ] ; then 
         cmd_type=`echo $2 | sed -n "s/\(-*\)\([a-z]*\)/\2/p"`
         if [ $cmd_type = "usrid" ]; then
             mining_usernames $3
