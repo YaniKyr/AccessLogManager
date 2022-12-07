@@ -42,6 +42,7 @@ function mining_usernames(){
 
         let userArr["-"]=number_of_lines-number +1
         for key in "${!userArr[@]}"; do echo "${userArr[$key]} $key"; done
+        rm cached_username.log
     else
         if [ $1 = "-" ]; then 
             sed -n "s/.*\(- -\).*/\0/p" $FILE 
@@ -68,6 +69,74 @@ function findByMethod(){
     fi
 }
 
+function show_protocol(){
+    if [ -z $1 ]; then 
+    echo "Wrong network protocol"
+    elif [ $1 = "IPv4" ]; then
+        
+        sed -n  "s/[0-9]\+\.[0-9]\+.[0-9]\+.[0-9]\+.*/\0/p" $FILE
+    elif [ $1 = "IPv6" ]; then 
+        sed -n "s/::[0-9].*/\0/p" $FILE
+    else 
+        echo "Wrong network protocol"
+    fi
+}
+
+function count_broswers(){
+
+    #Find a solution with awk else with sed
+    
+    awk '$0 == "Mozilla" count++ {print count}' $FILE
+
+}
+
+function search_by_date(){
+    #check if input has length bigger than four
+    #if true, trim input
+    case $1 in
+        Jan)
+            sed -n "s/.*\(\[..\/$1\/\).*/\0/p" $FILE
+        ;;
+        Feb)
+            sed -n "s/.*\(\[..\/$1\/\).*/\0/p" $FILE
+        ;;
+        Mar)
+            sed -n "s/.*\(\[..\/$1\/\).*/\0/p" $FILE
+        ;;
+        Apr)
+            sed -n "s/.*\(\[..\/$1\/\).*/\0/p" $FILE
+        ;;
+        May)
+            sed -n "s/.*\(\[..\/$1\/\).*/\0/p" $FILE
+        ;;
+        Jun)
+            sed -n "s/.*\(\[..\/$1\/\).*/\0/p" $FILE
+        ;;
+        Jul)
+            sed -n "s/.*\(\[..\/$1\/\).*/\0/p" $FILE
+        ;;
+        Aug)
+            sed -n "s/.*\(\[..\/$1\/\).*/\0/p" $FILE
+        ;;
+        Sep)
+            sed -n "s/.*\(\[..\/$1\/\).*/\0/p" $FILE
+        ;;
+        Oct)
+            sed -n "s/.*\(\[..\/$1\/\).*/\0/p" $FILE
+        ;;
+        Nov)
+            sed -n "s/.*\(\[..\/$1\/\).*/\0/p" $FILE
+        ;;
+        Dec)
+            sed -n "s/.*\(\[..\/$1\/\).*/\0/p" $FILE
+        ;;
+        *)
+        echo "Wrong Date"
+    esac
+ 
+    
+}
+
 if [ -z $1 -a -z $2  ] ; then
     echo "Yannis Kyriakopoulos"
 elif [ -n $1 -a -z $2 ] ; then 
@@ -84,7 +153,16 @@ elif [ -n $1 -a -n $2 ] ; then
         --usrid)
             mining_usernames $3
         ;;
+        --servprot)
+        	show_protocol $3
+        ;;
+        --browsers)
+            count_broswers 
+        ;;
+        --datum)
+            search_by_date $3
+        ;;
         *)
         echo "DEFAULT"
     esac
-fi 
+fi
