@@ -152,7 +152,7 @@ function Instructions(){
     echo "--usrid                       [USERNAME] find data based on a username."
     echo "                              Default print the number of occurences for" 
     echo "                              each username."
-    echo "-method                       [INSTRUCTION] input only GET or POST.Returns all "
+    echo "--method                       [INSTRUCTION] input only GET or POST.Returns all "
     echo "                              the data, that have the specified [INSTRUCTION]"
     echo "--servprot                    [IP] input only IPv4 or IPv6. Return the"
     echo "                              data that have the specified [IP] "
@@ -162,8 +162,8 @@ function Instructions(){
     echo "                              the data based on months. The occurrences"
     echo "                              are independent of the year"
     echo ""
-    echo "This shell script can read as well log as txt files. The purpose of the script is"
-    echo "to parse files, that have netowrk POST or GET requests. The project was implemented"
+    echo "This shell script can read .log as well as .txt files. The purpose of the script is"
+    echo "to parse files that contain network POST or GET requests. The project was implemented"
     echo "as a university exercise. I claim no right. Yannis Kyriakopoulos"
 }
 
@@ -183,7 +183,7 @@ elif [ -n $1 -a -z $2 ] ; then
 elif [ -n $1 -a -n $2 ] ; then
     if [ -f "$1" ]; then
         case $2 in 
-        -method)
+        --method)
             find_by_method $3
         ;;
         --usrid)
