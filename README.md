@@ -1,7 +1,7 @@
 # Access.log Manager
 Shell script for managing access.log files. Software Systems University Project 2022-2023
 
-![alt text](https://github.com/JohnnyKyr/AccessLogManager/blob/HelpImage/h_image.png?raw=true)
+![alt text](https://github.com/JohnnyKyr/AccessLogManager/blob/main/HelpImage/h_image.png?raw=true)
 
 Data format:
 * 127.0.0.1 - user - [xx/Feb/xxxx:xx:xx:xx +0300] "GET /server-status HTTP/1.1" xxxx xxxx
