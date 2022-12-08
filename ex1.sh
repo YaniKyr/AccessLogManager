@@ -2,6 +2,7 @@
 
 #USE CASE instead of if's 
 FILE=$1
+
 CMD=$2
 STRS=$3
 
@@ -25,7 +26,7 @@ STRS=$3
 function mining_usernames(){
     
     if [ -z $1 ]; then 
-        
+
         declare -A userArr
         #Get the number of lines with wc. 
         #Sed is used to remove the filename of the wc's output
@@ -57,15 +58,15 @@ function mining_usernames(){
     fi
 }
 
-function findByMethod(){
+function find_by_method(){
     if [ -z $1 ]; then 
-    echo "Fallacy"
+    echo "Wrong Method Name"
     elif [ $1 = "GET" ]; then
         sed -n "s/.*GET.*/\0/p" $FILE
     elif [ $1 = "POST" ]; then 
         sed -n "s/.*POST.*/\0/p" $FILE
     else 
-        echo "Fallacy"
+        echo "Wrong Method Name"
     fi
 }
 
@@ -94,8 +95,7 @@ function count_browsers(){
 }
 
 function search_by_date(){
-    #check if input has length bigger than four
-    #if true, trim input
+    
     case $1 in
         Jan)
             sed -n "s/.*\(\[..\/$1\/\).*/\0/p" $FILE
@@ -140,18 +140,51 @@ function search_by_date(){
     
 }
 
+
+function Instructions(){
+    echo "Usage:    ./logparser.sh [FILE] [OPTION]...                 "
+    echo "[FILE],[OPTION] are not mandatory.                          "
+    echo ""
+    echo "./logparser.sh                Returns the owners personal info."
+    echo "./logparser.sh [FILE]         Output the [FILE]            "
+    echo ""
+    echo "Arguments:"
+    echo "--usrid                       [USERNAME] find data based on a username."
+    echo "                              Default print the number of occurences for" 
+    echo "                              each username."
+    echo "-method                       [INSTRUCTION] input only GET or POST.Returns all "
+    echo "                              the data, that have the specified [INSTRUCTION]"
+    echo "--servprot                    [IP] input only IPv4 or IPv6. Return the"
+    echo "                              data that have the specified [IP] "
+    echo "--browsers                    Return the number of occurrences, of predefined"
+    echo "                              browsers. Mozilla, Safari, Chrome, Edg"
+    echo "--datum                       [DATE] input only months Jan...Dec. Print"
+    echo "                              the data based on months. The occurrences"
+    echo "                              are independent of the year"
+    echo ""
+    echo "This shell script can read as well log as txt files. The purpose of the script is"
+    echo "to parse files, that have netowrk POST or GET requests. The project was implemented"
+    echo "as a university exercise. I claim no right. Yannis Kyriakopoulos"
+}
+
+
 if [ -z $1 -a -z $2  ] ; then
     echo "Yannis Kyriakopoulos"
-elif [ -n $1 -a -z $2 ] ; then 
-    cat $1
 elif [ $1 = "--help" -o $1 = "-h" -a -z $2 ]; then
-    echo "Manual Instructions"
+    Instructions
+elif [ -n $1 -a -z $2 ] ; then 
+    if [ -f "$1" ]; then
+        cat $1
+    else 
+        echo "Error in file: 'File does not exist' "
+    fi
+
 
 elif [ -n $1 -a -n $2 ] ; then
-    
-    case $2 in 
+    if [ -f "$1" ]; then
+        case $2 in 
         -method)
-            findByMethod $3
+            find_by_method $3
         ;;
         --usrid)
             mining_usernames $3
@@ -166,6 +199,10 @@ elif [ -n $1 -a -n $2 ] ; then
             search_by_date $3
         ;;
         *)
-        echo "DEFAULT"
+            echo "Command Ill formed. Check the syntax. --help for instructions"
     esac
+    else 
+        echo "Error in file: 'File does not exist' "
+    fi
+    
 fi
