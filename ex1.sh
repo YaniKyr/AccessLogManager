@@ -25,7 +25,7 @@ STRS=$3
 function mining_usernames(){
     
     if [ -z $1 ]; then 
-
+        
         declare -A userArr
         #Get the number of lines with wc. 
         #Sed is used to remove the filename of the wc's output
@@ -82,11 +82,14 @@ function show_protocol(){
     fi
 }
 
-function count_broswers(){
+function count_browsers(){
 
-    #Find a solution with awk else with sed
     
-    awk '$0 == "Mozilla" count++ {print count}' $FILE
+    
+    awk '{if( match($0,"Mozilla") !=0) count++ } END{ print count}' $FILE
+    awk '{if( match($0,"Safari") !=0) count++ } END{ print count}' $FILE
+    awk '{if( match($0,"Chrome") !=0) count++ } END{ print count}' $FILE
+    awk '{if( match($0,"Edg") !=0) count++ } END{ print count}' $FILE
 
 }
 
@@ -157,7 +160,7 @@ elif [ -n $1 -a -n $2 ] ; then
         	show_protocol $3
         ;;
         --browsers)
-            count_broswers 
+            count_browsers 
         ;;
         --datum)
             search_by_date $3
