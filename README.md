@@ -8,6 +8,7 @@ Usage:    ./logparser.sh [FILE] [OPTION]...
 ./logparser.sh [FILE]         Output the [FILE]
 
 Arguments:
+
 --usrid                       [USERNAME] find data based on a username.
                               Default print the number of occurences for
                               each username.
