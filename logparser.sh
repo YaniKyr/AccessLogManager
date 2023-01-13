@@ -6,22 +6,6 @@ FILE=$1
 CMD=$2
 STRS=$3
 
- #  declare -A assArr
- #  
- #  while read p; do
- #      let count++ 
- #     
- #      name=`echo "$p" |sed -n "s/.*\(-\s[a-zA-Z0-9 ]* \).*/\1/p"`
- #      temp=`echo "$name" |sed -n "s/-\s\([a-zA-Z0-9]*\)\s/\1/p"`
- #      if [ -z $temp ]; then 
- #          let assArr["-"]++
- #      else 
- #          let assArr[$temp]++
- #      fi
- #     
- #  done < $FILE
- #  for key in "${!assArr[@]}"; do echo "${assArr[$key]} $key"; done
-
 
 function mining_usernames(){
     
